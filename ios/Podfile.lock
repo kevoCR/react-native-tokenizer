@@ -1,0 +1,16 @@
+PODS:
+  - PaymentsSDK (1.0.7)
+
+DEPENDENCIES:
+  - PaymentsSDK (~> 1.0.7)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PaymentsSDK
+
+SPEC CHECKSUMS:
+  PaymentsSDK: 20cbdf8049a4ce440dfb51a0e23a03d852ac26d7
+
+PODFILE CHECKSUM: 63795471dd4f7ad87cc4abe96419f8f56b6a5803
+
+COCOAPODS: 1.5.2
