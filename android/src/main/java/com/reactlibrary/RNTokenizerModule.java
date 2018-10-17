@@ -1,6 +1,7 @@
 
 package com.reactlibrary;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -26,18 +27,21 @@ public class RNTokenizerModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public String fetchToken(String cardNumber, String expirationYear, String expirationMonth) {
+    public void fetchToken(String cardNumber, int expirationYear, int expirationMonth, final Promise promise) {
 
         //PaymentsSDK paymentsSDK = new PaymentsSDK(apiEndpoint, applicationId);
         PaymentsSDK paymentsSDK = new PaymentsSDK("https://api-staging.finix.io", "APiAbi6kS3pMq552BpUcfYHZ");
 
+        Token token = null;
         try {
-            Token token = paymentsSDK.tokenize("4111111111111111", PAYMENT_CARD,
-                    12, 2022);
-            return token.getId();
+            token = paymentsSDK.tokenize(cardNumber,PAYMENT_CARD,expirationMonth,expirationYear);
         } catch (Exception e) {
-            e.printStackTrace();
+            promise.reject("TOKENIZER_ERROR", "Failed to fetch Finix Token");
         }
-        return null;
+        if(token.getId() != null)
+            promise.resolve(token.getId());
+        else
+         promise.reject("TOKENIZER_ERROR", "Failed to fetch Finix Token");
+
     }
 }
